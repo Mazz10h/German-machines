@@ -6,12 +6,12 @@ export default function Vehicles() {
   const [brandFilter, setBrandFilter] = useState("");
   const [fuelFilter, setFuelFilter] = useState("");
 
-  // Fetch cars from backend (for now, we can use mock data)
+  // Load mock cars
   useEffect(() => {
     const mockCars = [
-      { id: 1, brand: "BMW", model: "M5", year: 2022, price: 100000, fuel: "Petrol", image: "https://via.placeholder.com/250" },
-      { id: 2, brand: "Audi", model: "A6", year: 2021, price: 85000, fuel: "Diesel", image: "https://via.placeholder.com/250" },
-      { id: 3, brand: "Mercedes", model: "C300", year: 2023, price: 95000, fuel: "Petrol", image: "https://via.placeholder.com/250" },
+      { id: 1, brand: "BMW", model: "M4", year: 2022, price: 100000, fuel: "Petrol", image: "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?q=80&w=1815&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+      { id: 2, brand: "Audi", model: "TTRS", year: 2021, price: 85000, fuel: "Diesel", image: "https://images.unsplash.com/photo-1617195920791-e42b4d1e559a?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+      { id: 3, brand: "Mercedes", model: "G-Wagon", year: 2023, price: 95000, fuel: "Petrol", image: "https://images.unsplash.com/photo-1709072245760-ec5b9a6b9f9b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
     ];
     setCars(mockCars);
   }, []);

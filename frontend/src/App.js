@@ -8,7 +8,7 @@ import Contact from "./components/Contact";
 import "./styles.css";
 
 function App() {
-  const [page, setPage] = useState("home");
+  const [page, setPage] = useState("home"); // default page
 
   return (
     <div>

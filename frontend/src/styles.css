@@ -1,36 +1,50 @@
-*{
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+/* Reset & base */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
+  background-image: url(https://luxurysupercarsdubai.com/wp-content/uploads/2024/12/Mercedes-Benz-G63-AMG-2021-white-3.jpeg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
+/* Navbar */
 .navbar {
   background-color: #25818d;
   padding: 1rem;
   display: flex;
   justify-content: space-around;
-
 }
 
-.navbar a {
+.navbar button {
   color: white;
-  text-decoration: none;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
+.navbar button:hover {
+  text-decoration: underline;
+}
+
+/* Sections */
 .page {
-  display: none;
   padding: 2rem;
+  background: rgba(255, 255, 255, 0.85);
+  margin: 20px auto;
+  border-radius: 8px;
+  max-width: 1000px;
 }
 
-.page.active {
-  display: block;
-}
-
+/* Car grid */
 .car-grid {
   display: flex;
   flex-wrap: wrap;
@@ -43,6 +57,7 @@ body {
   padding: 1rem;
   width: 250px;
   background: #f9f9f9;
+  border-radius: 6px;
 }
 
 .car-card img {
@@ -51,7 +66,7 @@ body {
   object-fit: cover;
 }
 
-
+/* Review form */
 #review-form {
   margin-top: 20px;
   display: flex;
@@ -81,38 +96,7 @@ body {
   background-color: darkcyan;
 }
 
-#review-form{
-  margin-top: 10px;
-  display: flex;
-  flex-direction:column;
-  max-width: 400px;
-}
-
-#reviews h3{
-  margin-top: 50px;
-}
-
-body{
-  margin: 0;
-  background-image: url(https://luxurysupercarsdubai.com/wp-content/uploads/2024/12/Mercedes-Benz-G63-AMG-2021-white-3.jpeg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-section{
-  background: rgba(255, 255, 255, 0.8);
-  padding: 40px;
-  margin: 20px auto;
-  border-radius: 8px;
-  max-width: 1000px;
-}
-
-html{
+/* Smooth scroll (optional) */
+html {
   scroll-behavior: smooth;
-}
-
-#reviews {
-  background-image: url();
 }
