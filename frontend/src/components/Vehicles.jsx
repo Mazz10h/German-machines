@@ -1,56 +1,76 @@
-import React, { useState, useEffect } from "react";
-import CarCard from "./CarCard";
+import React, { useEffect, useState } from "react";
+import { getProducts, getCategories } from "../services/api";
+import "./vehicles.css"; // optional CSS for styling
 
-export default function Vehicles() {
-  const [cars, setCars] = useState([]);
-  const [brandFilter, setBrandFilter] = useState("");
-  const [fuelFilter, setFuelFilter] = useState("");
+const DEFAULT_IMAGE = "https://via.placeholder.com/300x150?text=No+Image";
 
-  // Load mock cars
+const Vehicles = () => {
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [loading, setLoading] = useState(true);
+
+  const fetchProducts = async (categoryId) => {
+    setLoading(true);
+    const data = await getProducts(categoryId);
+    setProducts(data);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const mockCars = [
-      { id: 1, brand: "BMW", model: "M4", year: 2022, price: 100000, fuel: "Petrol", image: "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?q=80&w=1815&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-      { id: 2, brand: "Audi", model: "TTRS", year: 2021, price: 85000, fuel: "Diesel", image: "https://images.unsplash.com/photo-1617195920791-e42b4d1e559a?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-      { id: 3, brand: "Mercedes", model: "G-Wagon", year: 2023, price: 95000, fuel: "Petrol", image: "https://images.unsplash.com/photo-1709072245760-ec5b9a6b9f9b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-    ];
-    setCars(mockCars);
+    // Fetch categories for filter dropdown
+    getCategories().then(setCategories).catch(console.error);
+
+    // Fetch all products initially
+    fetchProducts();
   }, []);
 
-  const filteredCars = cars.filter(car => {
-    const brandMatch = !brandFilter || car.brand === brandFilter;
-    const fuelMatch = !fuelFilter || car.fuel === fuelFilter;
-    return brandMatch && fuelMatch;
-  });
+  const handleCategoryChange = (e) => {
+    const categoryId = e.target.value;
+    setSelectedCategory(categoryId);
+    fetchProducts(categoryId);
+  };
 
   return (
-    <section className="page">
-      <h2>Available Vehicles</h2>
+    <div className="vehicles-page">
+      <h2>Our Vehicles</h2>
 
-      <div>
-        <label>Filter by brand:</label>
-        <select value={brandFilter} onChange={e => setBrandFilter(e.target.value)}>
-          <option value="">All</option>
-          <option value="BMW">BMW</option>
-          <option value="Audi">Audi</option>
-          <option value="Mercedes">Mercedes</option>
-          <option value="Porsche">Porsche</option>
-          <option value="Volkswagen">Volkswagen</option>
-        </select>
-
-        <label>Fuel Type:</label>
-        <select value={fuelFilter} onChange={e => setFuelFilter(e.target.value)}>
-          <option value="">All</option>
-          <option value="Petrol">Petrol</option>
-          <option value="Diesel">Diesel</option>
-          <option value="Electric">Electric</option>
+      {/* Category Filter */}
+      <div className="category-filter">
+        <label>Filter by Category: </label>
+        <select value={selectedCategory} onChange={handleCategoryChange}>
+          <option value="all">All</option>
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
+            </option>
+          ))}
         </select>
       </div>
 
-      <div className="car-grid">
-        {filteredCars.map(car => (
-          <CarCard key={car.id} car={car} />
-        ))}
-      </div>
-    </section>
+      {loading ? (
+        <p>Loading vehicles...</p>
+      ) : products.length === 0 ? (
+        <p>No vehicles found.</p>
+      ) : (
+        <div className="vehicle-grid">
+          {products.map((vehicle) => (
+            <div key={vehicle.id} className="vehicle-card">
+              <img
+                src={vehicle.image_url || DEFAULT_IMAGE}
+                alt={vehicle.name}
+                className="vehicle-image"
+              />
+              <h3>{vehicle.name}</h3>
+              <p>Brand: {vehicle.brand}</p>
+              <p>Price: ${vehicle.price.toLocaleString()}</p>
+              <p>Category: {vehicle.category_name}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
-}
+};
+
+export default Vehicles;
